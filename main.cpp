@@ -35,9 +35,13 @@ int main(int argc, char** argv)
 	}
 
 	bool running = true;
+	bool mousePressed = false;
     SDL_Event event;
 
-	Grid grid = createGrid(argv[1]); 
+	Grid grid = createGrid(argv[1]);
+
+    int cellWidth = winSurface->w / grid[0].size();
+    int cellHeight = winSurface->h / grid.size();
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -56,8 +60,22 @@ int main(int argc, char** argv)
                     running = false;
                 }
             }
+			if (event.type == SDL_MOUSEBUTTONDOWN)
+				mousePressed = true;
+			if (event.type == SDL_MOUSEBUTTONUP)
+				mousePressed = false;
         }
 
+		if (mousePressed)
+		{
+			int mouseX;
+			int mouseY;
+			SDL_GetMouseState(&mouseX, &mouseY);
+			mouseX /= cellWidth;
+			mouseY /= cellHeight;
+			grid[mouseY][mouseX] = '@';
+			
+		}
         // Render
         gameoflife(winSurface, grid);
 
