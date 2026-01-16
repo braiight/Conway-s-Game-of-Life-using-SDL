@@ -13,11 +13,11 @@
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 1024
 
-using Grid = std::vector<std::vector<char> >;
+using Grid = std::vector<std::vector<int> >;
 
 void    drawGrid(SDL_Surface* surface, Grid &grid);
 Grid    createGrid(char *file);
-void    updateGrid(std::vector<std::vector<char> > &map);
+void    updateGrid(Grid &map);
 Grid    getEmptyGrid();
 
 #endif

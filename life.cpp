@@ -1,16 +1,16 @@
 #include "life.hpp"
 
 
-std::vector<std::vector<char> > createGrid(char *file)
+Grid createGrid(char *file)
 {
-    std::vector<std::vector<char> > grid;
+    Grid grid;
     std::ifstream inputFile(file);
 
     std::string line;
 
     while (std::getline(inputFile, line))
     {
-        std::vector<char> current;
+        std::vector<int> current;
         for (size_t i = 0; i < line.length(); i++)
             current.push_back(line[i]);
         grid.push_back(current);
@@ -19,23 +19,24 @@ std::vector<std::vector<char> > createGrid(char *file)
     return (grid);
 }
 
-std::vector<std::vector<char> > getEmptyGrid()
+Grid getEmptyGrid()
 {
-    std::vector<std::vector<char> > grid;
-
+    Grid grid;
+    grid.reserve(NUM_ROWS);
     for (int i = 0; i < NUM_COLS; i++)
     {
-        std::vector<char> current;
+        std::vector<int> current;
+        current.reserve(NUM_ROWS);
         for (int j = 0; j < NUM_ROWS; j++)
         {
-            current.push_back('\0');
+            current.push_back(0);
         }
         grid.push_back(current);
     }
     return (grid);
 }
 
-bool    isAlive(int x, int y, std::vector<std::vector<char> > &grid)
+bool    isAlive(int x, int y, Grid &grid)
 {
     if (grid[y][x])
         return (true);
@@ -43,7 +44,7 @@ bool    isAlive(int x, int y, std::vector<std::vector<char> > &grid)
 
 }
 
-int numNeighbors(int x, int y, std::vector<std::vector<char> >map)
+int numNeighbors(int x, int y, Grid map)
 {
     int y_limit = map.size() - 1;
     int x_limit = (*map.begin()).size() - 1;
@@ -97,7 +98,7 @@ int numNeighbors(int x, int y, std::vector<std::vector<char> >map)
 }
 
 
-void updateGrid(std::vector<std::vector<char> > &map)
+void updateGrid(Grid &map)
 {
     int y_limit = map.size();
     int x_limit = (*map.begin()).size();
@@ -105,21 +106,22 @@ void updateGrid(std::vector<std::vector<char> > &map)
     int x = 0;
     int y = 0;
 
-    std::vector<std::vector<char> > copy(map);
+    Grid copy(map);
     while (y < y_limit)
     {
         x = 0;
         while (x < x_limit)
         {
-            if (isAlive(x, y, map) && (numNeighbors(x, y, map) < 2 || numNeighbors(x, y, map) > 3))
+            int neighbors = numNeighbors(x, y, map);
+            if (isAlive(x, y, map) && (neighbors < 2 || neighbors > 3))
             {
                 copy[y][x] = '\0';
             }
-            if (!isAlive(x,y, map) && numNeighbors(x, y, map) == 3)
+            if (!isAlive(x,y, map) && neighbors == 3)
             {
                 copy[y][x] = 1;
             }
-            if ((isAlive(x, y, map) && !(numNeighbors(x, y, map) < 2 || numNeighbors(x, y, map) > 3)))
+            if ((isAlive(x, y, map) && !(neighbors < 2 || neighbors > 3)))
             {
                 if (copy[y][x] < 112)
                     copy[y][x] += 8;

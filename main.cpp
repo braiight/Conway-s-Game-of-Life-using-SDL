@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
 	(void)argc;
 	(void)argv;
-	
+
 	SDL_Surface* winSurface = NULL;
 	SDL_Window* window = NULL;
 
