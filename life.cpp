@@ -111,7 +111,7 @@ void updateGrid(std::vector<std::vector<char> > &map)
     return;
 } 
 
-void    gameoflife(SDL_Surface* surface, Grid &grid)
+void    drawGrid(SDL_Surface* surface, Grid &grid)
 {
     if (grid.empty() || grid[0].empty())
         return;
@@ -141,5 +141,4 @@ void    gameoflife(SDL_Surface* surface, Grid &grid)
             SDL_FillRect(surface, &cellRect, color);
         }
     }
-    updateGrid(grid);
 }

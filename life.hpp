@@ -9,7 +9,8 @@
 
 using Grid = std::vector<std::vector<char> >;
 
-void    gameoflife(SDL_Surface* surface, Grid &grid);
-Grid createGrid(char *file);
+void    drawGrid(SDL_Surface* surface, Grid &grid);
+Grid    createGrid(char *file);
+void    updateGrid(std::vector<std::vector<char> > &map);
 
 #endif

@@ -64,25 +64,36 @@ int main(int argc, char** argv)
 				mousePressed = true;
 			if (event.type == SDL_MOUSEBUTTONUP)
 				mousePressed = false;
+			
+			while (mousePressed)
+			{
+				while (SDL_PollEvent(&event))
+				{
+					if (event.type == SDL_MOUSEBUTTONUP)
+						mousePressed = false;
+				}
+				int mouseX;
+				int mouseY;
+				SDL_GetMouseState(&mouseX, &mouseY);
+				mouseX /= cellWidth;
+				mouseY /= cellHeight;
+				if (mouseY >= 0 && mouseY < (int)grid.size() &&
+					mouseX >= 0 && mouseX < (int)grid[0].size())
+				{
+					grid[mouseY][mouseX] = '@';
+				}
+				drawGrid(winSurface, grid);
+				SDL_UpdateWindowSurface(window);
+				SDL_Delay(50);
+			}
         }
 
-		if (mousePressed)
-		{
-			int mouseX;
-			int mouseY;
-			SDL_GetMouseState(&mouseX, &mouseY);
-			mouseX /= cellWidth;
-			mouseY /= cellHeight;
-			grid[mouseY][mouseX] = '@';
-			
-		}
+
         // Render
-        gameoflife(winSurface, grid);
-
-
+		updateGrid(grid);
+        drawGrid(winSurface, grid);
         SDL_UpdateWindowSurface(window);
-
-        SDL_Delay(100);
+        SDL_Delay(50);
     }
 
 	// This will also destroy the surface
