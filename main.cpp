@@ -81,7 +81,7 @@ int main(int argc, char** argv)
 				if (mouseY >= 0 && mouseY < (int)grid.size() &&
 					mouseX >= 0 && mouseX < (int)grid[0].size())
 				{
-					grid[mouseY][mouseX] = '@';
+					grid[mouseY][mouseX] = 1;
 				}
 				drawGrid(winSurface, grid);
 				SDL_UpdateWindowSurface(window);

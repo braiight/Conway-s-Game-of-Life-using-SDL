@@ -154,7 +154,10 @@ void    drawGrid(SDL_Surface* surface, Grid &grid)
             cellRect.h = cellHeight;
 
             Uint32 color;
-            int redGradient = 255 - (grid[row][col] * 2);
+
+            int redGradient = 255;
+            if (grid[row][col] != 1)
+                redGradient -= (grid[row][col] * 2);
             if (isAlive(col, row, grid))
                 color = SDL_MapRGB(surface->format, 255, redGradient, redGradient);
             else
