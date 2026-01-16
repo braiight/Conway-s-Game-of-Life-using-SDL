@@ -16,7 +16,6 @@ int main(int argc, char** argv)
 	} 
 
 	window = SDL_CreateWindow("Game of Life", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
-
 	if (!window)
 	{
 		std::cerr << "Error creating window: " << SDL_GetError()  << std::endl;
@@ -24,7 +23,6 @@ int main(int argc, char** argv)
 	}
 
 	winSurface = SDL_GetWindowSurface(window);
-
 	if (!winSurface)
 	{
 		std::cerr << "Error getting surface: " << SDL_GetError() << std::endl;
@@ -43,19 +41,17 @@ int main(int argc, char** argv)
 
     int cellWidth = winSurface->w / grid[0].size();
     int cellHeight = winSurface->h / grid.size();
+
+	//main loop
     while (running)
     {
         while (SDL_PollEvent(&event))
         {
-            // Window close (X button)
             if (event.type == SDL_QUIT)
-            {
                 running = false;
-            }
 
             if (event.type == SDL_KEYDOWN)
             {
-                // ESC key
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
                     running = false;
@@ -63,9 +59,8 @@ int main(int argc, char** argv)
             }
 			if (event.type == SDL_MOUSEBUTTONDOWN)
 				mousePressed = true;
-			if (event.type == SDL_MOUSEBUTTONUP)
-				mousePressed = false;
 			
+			// Draw new cells using the mouse
 			while (mousePressed)
 			{
 				while (SDL_PollEvent(&event))
