@@ -10,6 +10,9 @@
 # define NUM_COLS 70
 # define NUM_ROWS 70
 
+# define WIN_WIDTH 1024
+# define WIN_HEIGHT 1024
+
 using Grid = std::vector<std::vector<char> >;
 
 void    drawGrid(SDL_Surface* surface, Grid &grid);
