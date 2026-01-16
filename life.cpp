@@ -121,8 +121,8 @@ void updateGrid(std::vector<std::vector<char> > &map)
             }
             if ((isAlive(x, y, map) && !(numNeighbors(x, y, map) < 2 || numNeighbors(x, y, map) > 3)))
             {
-                if (copy[y][x] != 127)
-                    copy[y][x] += 1;
+                if (copy[y][x] < 112)
+                    copy[y][x] += 8;
             }
             x++;
         }
