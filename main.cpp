@@ -5,9 +5,6 @@
 
 int main(int argc, char** argv)
 {
-
-	(void)argc;
-
 	SDL_Surface* winSurface = NULL;
 	SDL_Window* window = NULL;
 
@@ -38,7 +35,11 @@ int main(int argc, char** argv)
 	bool mousePressed = false;
     SDL_Event event;
 
-	Grid grid = createGrid(argv[1]);
+	Grid grid; 
+	if (argc == 1)
+		grid = getEmptyGrid();
+	else
+		grid = createGrid(argv[1]);
 
     int cellWidth = winSurface->w / grid[0].size();
     int cellHeight = winSurface->h / grid.size();

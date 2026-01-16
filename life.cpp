@@ -19,9 +19,25 @@ std::vector<std::vector<char> > createGrid(char *file)
     return (grid);
 }
 
+std::vector<std::vector<char> > getEmptyGrid()
+{
+    std::vector<std::vector<char> > grid;
+
+    for (int i = 0; i < NUM_COLS; i++)
+    {
+        std::vector<char> current;
+        for (int j = 0; j < NUM_ROWS; j++)
+        {
+            current.push_back('\0');
+        }
+        grid.push_back(current);
+    }
+    return (grid);
+}
+
 bool    isAlive(int x, int y, std::vector<std::vector<char> > &grid)
 {
-    if (grid[y][x] == '@')
+    if (grid[y][x])
         return (true);
     return (false);
 
@@ -97,11 +113,16 @@ void updateGrid(std::vector<std::vector<char> > &map)
         {
             if (isAlive(x, y, map) && (numNeighbors(x, y, map) < 2 || numNeighbors(x, y, map) > 3))
             {
-                copy[y][x] = '.';
+                copy[y][x] = '\0';
             }
             if (!isAlive(x,y, map) && numNeighbors(x, y, map) == 3)
             {
-                copy[y][x] = '@';
+                copy[y][x] = 1;
+            }
+            if ((isAlive(x, y, map) && !(numNeighbors(x, y, map) < 2 || numNeighbors(x, y, map) > 3)))
+            {
+                if (copy[y][x] != 127)
+                    copy[y][x] += 1;
             }
             x++;
         }
@@ -133,8 +154,9 @@ void    drawGrid(SDL_Surface* surface, Grid &grid)
             cellRect.h = cellHeight;
 
             Uint32 color;
+            int redGradient = 255 - (grid[row][col] * 2);
             if (isAlive(col, row, grid))
-                color = SDL_MapRGB(surface->format, 255, 255, 255);
+                color = SDL_MapRGB(surface->format, 255, redGradient, redGradient);
             else
                 color = SDL_MapRGB(surface->format, 0, 0, 0);
 
