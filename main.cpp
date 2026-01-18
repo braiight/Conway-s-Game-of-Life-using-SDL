@@ -42,8 +42,8 @@ int main(int argc, char** argv)
 	// else
 		// grid = createGrid(argv[1]);
 
-    int cellWidth = winSurface->w / grid[0].size();
-    int cellHeight = winSurface->h / grid.size();
+    int cellWidth = WIN_WIDTH / NUM_COLS;
+    int cellHeight = WIN_HEIGHT / NUM_ROWS;
 
 	//main loop
     while (running)

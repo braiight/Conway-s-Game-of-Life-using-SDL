@@ -7,11 +7,11 @@
 #include <string>
 #include <vector>
 
-# define NUM_COLS 80
-# define NUM_ROWS 80
+# define NUM_COLS 100
+# define NUM_ROWS 100
 
-# define WIN_WIDTH 1024
-# define WIN_HEIGHT 1024
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 1000
 
 using Grid = std::vector<std::vector<int> >;
 
